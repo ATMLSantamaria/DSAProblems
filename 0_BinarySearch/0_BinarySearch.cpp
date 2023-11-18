@@ -36,21 +36,26 @@ int RecursiveBinarySearch(vector<int> & array, int target,int left,int right) {
   }
 }
 
+int IterativeBinarySearch(std::vector<int> &array,int target, int left, int right) {
 
+}
+
+//In C++ a functor would be better but this is simple enough so it does not matter.
+//I use this function to test the different implementation sof BinarySearch
+void test_to_function(int (* function_pointer_to_test)(std::vector<int> &,int,int,int),std::vector<int> & myInput_) {
+  
+  //This will check that the tested function find the appropiate index for each element of an array.
+  //Useful for spot edge errors in small samples. 
+  for (size_t i = 0; i < myInput_.size();++i) {
+    assert(function_pointer_to_test(myInput_,myInput_[i],0,myInput_.size()-1) == i);
+  }
+}
 
 int main() {
   std::vector<int> myInput_ = {0,4,6,22,35,65,70,77,79,80};
 
-  int existing_target = 79;
-  int non_existing_target = 100;
+  int (*functionRecursive)(std::vector<int> &,int,int,int) = &RecursiveBinarySearch;
 
+  test_to_function(functionRecursive,myInput_);
 
-  assert(RecursiveBinarySearch(myInput_,existing_target,0,myInput_.size()-1) == 8);
-  assert(RecursiveBinarySearch(myInput_,non_existing_target,0,myInput_.size()-1) == -1);
-  
-
-  for (size_t i = 0; i < myInput_.size();++i) {
-    assert(RecursiveBinarySearch(myInput_,myInput_[i],0,myInput_.size()-1) == i);
-    assert(BinarySearch(myInput_,myInput_[i]) == i);
-  }
 }

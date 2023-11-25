@@ -1,5 +1,6 @@
 #include <unordered_map>
 #include <cassert>
+#include <cmath>
 using namespace std;
 
 // This is an input struct. Do not edit.
@@ -10,6 +11,68 @@ class LinkedList {
 
   LinkedList(int value) { this->value = value; }
 };
+
+// Time O(n+m) Space O(1)
+LinkedList* mergingLinkedListsOptimized(LinkedList* linkedListOne, LinkedList* linkedListTwo) {
+  LinkedList * iterator_one = linkedListOne;
+  LinkedList * iterator_two = linkedListTwo;
+  int length_one = 0;
+  int length_two = 0;
+  while (iterator_one != nullptr) {
+    ++length_one;
+    iterator_one = iterator_one->next;
+  }
+  while (iterator_two != nullptr) {
+    ++length_two;
+    iterator_two = iterator_two->next;
+  }
+
+  int diff = abs(length_one - length_two);
+  
+  if (length_two > length_one) {
+
+    iterator_one = linkedListOne;
+    iterator_two = linkedListTwo;
+    for (int i = 0; i < diff;++i){
+      iterator_two = iterator_two->next;
+    }
+    while (iterator_one != nullptr && iterator_two != nullptr) {
+      if (iterator_one == iterator_two) {
+        return iterator_two;
+      }
+      iterator_one = iterator_one->next;
+      iterator_two = iterator_two->next;
+    }
+
+  } else if (length_one > length_two) {
+
+    iterator_one = linkedListOne;
+    iterator_two = linkedListTwo;
+    for (int i = 0; i < diff;++i){
+      iterator_one = iterator_one->next;
+    }
+    while (iterator_one != nullptr && iterator_two != nullptr) {
+      if (iterator_one == iterator_two) {
+        return iterator_two;
+      }
+    iterator_one = iterator_one->next;
+    iterator_two = iterator_two->next;
+    }
+
+  } else {
+    iterator_one = linkedListOne;
+    iterator_two = linkedListTwo;
+    while (iterator_one != nullptr && iterator_two != nullptr) {
+      if (iterator_one == iterator_two) {
+        return iterator_two;
+      }
+    iterator_one = iterator_one->next;
+    iterator_two = iterator_two->next;
+    }
+  }
+
+  return nullptr;
+}
 
 // Time O(n+m) Space O(n)
 LinkedList* mergingLinkedLists(
@@ -54,6 +117,6 @@ int main() {
   cc->next = b;
 
   //Both list converge in b
-  assert(mergingLinkedLists(a,bb)->value == 8000);
+  assert(mergingLinkedListsOptimized(a,bb)->value == 8000);
 
 }

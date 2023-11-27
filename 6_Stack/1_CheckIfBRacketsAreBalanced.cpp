@@ -9,9 +9,6 @@ using namespace std;
 bool BalancedBrackets(string str) {
   std::stack<char> track_brackets;
   std::unordered_map<char,char> myPairs;
-  // myPairs['('] = ')';
-  // myPairs['['] = ']';
-  // myPairs['{'] = '}';
 
   myPairs[')'] = '(';
   myPairs[']'] = '[';
@@ -42,7 +39,6 @@ bool BalancedBrackets(string str) {
   }
   return true;
 }
-
 
 int main() {
   std::string target1 = "()()([dd{}])";

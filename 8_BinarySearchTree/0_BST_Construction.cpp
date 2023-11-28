@@ -56,94 +56,84 @@ class BST {
     return false;
   }
 
-  BST& remove(int val) {
-    if (this->left == nullptr && this->right == nullptr) {
-      return *this;
-    }
+  BST& remove(int val,BST * parent = nullptr) {
     
-    BST * iterator = this;
-    BST * parent = this;
-    bool iterator_left_of_parent = false;
-    //Search for Node tp be removed
-    //Keep a pointer to the parent of that Node
-    while (val != iterator->value) {
-      parent = iterator;
-      if (val < iterator->value) {
-        iterator_left_of_parent = true;
-        iterator = iterator->left;
+    BST * current = this;
+
+    //0 - Search for Node to be removed
+    //    Keep a pointer to the parent of that Node
+    while (val != current->value) {
+      parent = current;
+      if (val < current->value) {
+        current = current->left;
       } else {
-        iterator_left_of_parent = false;
-        iterator = iterator->right;
+        current = current->right;
       }
     }
 
-    // Iterator now point to node to remove
-    // Parent to its father
-
-    //First easy cases
-  
-    //Iterator does not have subtrees
-    if (iterator->right == nullptr && iterator->left == nullptr) {
-      if (iterator_left_of_parent == true) {
+    // 1 -  We try to remove an stand alone node the method simply returns
+    if (current->left == nullptr && current->right == nullptr && parent == nullptr) {//this makes me unable to delete 15
+      return *this;
+    }
+    if (current->left == nullptr && current->right == nullptr && parent != nullptr) {
+      if (parent->left == current) {
         parent->left = nullptr;
-      } else {
-        parent->right = nullptr; 
       }
+      if (parent->right == current) {
+        parent->right = nullptr;
+      }
+    }
+
+    // 2 - Case with 2 subtrees
+    if (current->left != nullptr && current->right != nullptr) {
+      //Replace the value of current by the value of the leftmost element of its right tree to keep the tree as a BST
+      current->value = current->right->getMinVal();
+      //Remove the node from where we tool the value
+      current->right->remove(current->value,current);
+      return *this;
+    }
+
+    //3 - Case with parent == null and 1 subtree; //We already eliminated the case with 2 null childs
+    if (parent == nullptr) {
+      if (current->left != nullptr) {
+        current->value = current->left->value;
+        current->right = current->left->right;
+        current->left = current->left->left;
+        return *this;
+
+      } else if (current->right != nullptr){
+        current->value = current->right->value;
+        current->right = current->right->right;
+        current->left = current->right->left;
+        return *this;
+      } else {
+        current->value = 0;
+        return *this;
+      }
+    }
+
+    //4 - Case with only one subtree and Parent != null
+    if (parent->left == current) { //this comparison is more subtle than my original bool updated while searching for current
+      parent->left = (current->left != nullptr) ? current->left : current->right;
+      return *this;
+    }
+    if (parent->right == current) {
+      parent->right = (current->left != nullptr) ? current->left : current->right;
       return *this;
     }
 
 
-    //iterator has only one subtree
-    if (iterator->right == nullptr) {
-      if (iterator_left_of_parent == true) {
-        parent->left = iterator->left;
-      } else {
-        parent->right = iterator->left;
-      }
-      return *this;
-    }
-
-    if (iterator->left == nullptr) {
-      if (iterator_left_of_parent == true) {
-        parent->left = iterator->right;
-      } else {
-        parent->right = iterator->right;
-      }
-      return *this;
-    }
-
-    //Below most complex case
-
-    //We need to find a node to replace the deleted one
-    //We need to replace this node for the smalles element of hte right tree to keep this as a BST
-    
-    BST * second_it = iterator->right;
-    BST * second_it_prev = iterator;
-    BST * third_it_prev = nullptr;
-    
-    while(second_it != nullptr) { 
-      third_it_prev = second_it_prev;
-      //when finish we need the prev
-      second_it_prev = second_it;
-      //Always to the left to find the smallest element of the right tree
-      second_it = second_it->left; 
-    }
-
-    //Note:
-    // - iterator point to node to remove
-    // - secondary iterator point to null
-    // - secondary iterator prev point to the node to put in the place of iterator
-
-    iterator->value = second_it_prev->value;
-    
-    //Delete the old appearence of the value that is not on place of the deleted one
-    delete (second_it_prev);
-    second_it_prev = nullptr;
-
-    // third_it_prev->left = nullptr;
-      
-    // Do not edit the return statement of this method.
     return *this;
+  }
+
+
+  int getMinVal() {
+    BST * current = this;
+    //Just travel left in the direction of the minimum values until arrive to the end
+    while (current->left != nullptr) {
+      current = current->left;
+    }
+    return current->value;
   }
 };
 

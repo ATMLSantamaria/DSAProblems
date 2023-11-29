@@ -12,6 +12,10 @@ class Node {
 
   Node(string str) { name = str; }
 
+
+  //Complexity T O(N+V) S O(N)    N is the number of nodes        V is the number of edges connecting the nodes
+  //Why N+V We go once across all nodes so O(N) But we also iterate across all edges. So O(V). In total O (V+N)
+  //Space O(N) due to the recursion
   vector<string> depthFirstSearch(vector<string>* array) {
     // Write your code here.
     Node * root = this;

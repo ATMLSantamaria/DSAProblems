@@ -25,8 +25,27 @@ vector<int> moveElementToEnd(vector<int> & array, int toMove) {
     if (end_counter <= i) {
       break;
     }
-  
-    
+  }
+  return array;
+}
+
+vector<int> moveElementToEndSimpler(vector<int> & array, int toMove) {
+  // Write your code here.
+
+  int right = array.size() - 1;
+  int left = 0;
+  int to_swap = 0;
+
+  while (left < right) {
+    if (array[right] == toMove) {
+      right--;
+      continue;
+    }
+    if (array[left] == toMove) {
+      std::swap(array[left] ,array[right]);
+    }
+    left++;
+    continue;
   }
   return array;
 }
@@ -34,7 +53,7 @@ vector<int> moveElementToEnd(vector<int> & array, int toMove) {
 int main() {
   std::vector<int> myTarget = {2, 1, 2, 2, 2, 3, 4, 2};
 
-  moveElementToEnd(myTarget,2);
+  moveElementToEndSimpler(myTarget,2);
 
   for (auto & i : myTarget) {
     std::cout << i << ",";

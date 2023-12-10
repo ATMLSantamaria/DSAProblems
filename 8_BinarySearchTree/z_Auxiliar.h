@@ -8,6 +8,34 @@
 
 #include <queue>
 
+//Binary Search Tree
+class BST_Basic {
+ public:
+  int value;
+  BST_Basic* left;
+  BST_Basic* right;
+
+  BST_Basic(int val) :value(val),left(nullptr), right(nullptr) {};
+  BST_Basic& insert(int val)  {
+    if (val < value) {
+        if (left == nullptr) {
+            left = new BST_Basic(val);
+        } else {
+            left->insert(val);
+        }
+    } else {
+        if (right == nullptr) {
+            right = new BST_Basic(val);
+        } else {
+            right->insert(val);
+        }
+    }
+    return *this;
+  };
+};
+
+
+
 
 template<typename TreeType>
 void InsertIn(int value,TreeType *root);

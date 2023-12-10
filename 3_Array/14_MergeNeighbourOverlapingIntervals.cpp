@@ -4,6 +4,8 @@
 
 using namespace std;
 
+
+//This function will merge overlaping intervals when thez are neighbours
 vector<vector<int>> mergeOverlappingIntervals(vector<vector<int>> intervals) {
   // Write your code here.
   int first_first = 0;

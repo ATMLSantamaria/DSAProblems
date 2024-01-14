@@ -26,7 +26,7 @@ int majorityElement(vector<int> array) {
 }
 
 //Brute force approach in O(n2)
-int majorityElement(vector<int> array) {
+int majorityElementBruteForce(vector<int> array) {
   // Write your code here.
   int appearences = 0;
   for (int i = 0;i < array.size();++i) {

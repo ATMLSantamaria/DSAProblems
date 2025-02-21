@@ -1,8 +1,3 @@
-
-
-
-
-
 res = [[-8,2,6],[-8,3,5],[-6,1,5]]
 
 # Find all triplets in the array that sum up to the target sum

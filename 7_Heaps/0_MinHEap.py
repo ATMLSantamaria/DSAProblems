@@ -9,7 +9,7 @@ class MinHeap:
         #  y el del padre es idxHijo - 1 // 2 -> en conuunto len(array) - 2 //2
         
         firstParentIdx = len(array) - 2 // 2
-        for currentIdx in reversed(range(firstParentIdx)):
+        for currentIdx in reversed(range(firstParentIdx + 1)):
             self.siftDown(currentIdx,len(array) - 1,array)
         return array
         
@@ -55,6 +55,7 @@ class MinHeap:
         self.swap(0,len(self.heap) - 1)
         valueToRemove = self.heap.pop()
         self.siftDown(0,len(self.heap) - 1,self.heap())
+        return valueToRemove
     
     # Append to the last position in array and then siftUp to its correct position
     def insert(self, value):

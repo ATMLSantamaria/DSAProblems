@@ -22,6 +22,7 @@ def calculateBranchSumDFS(node,runningSum,res):
     # If we have arrive to a leaf node append the sum to the vector of results
     if node.left is None and node.right is None:
         res.append(newRunningSum)
+        return
     # Now recursive calls
     calculateBranchSumDFS(node.left,newRunningSum,res)
     calculateBranchSumDFS(node.right,newRunningSum,res)

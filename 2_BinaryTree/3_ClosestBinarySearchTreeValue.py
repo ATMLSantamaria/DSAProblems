@@ -39,3 +39,23 @@ def traverseTree(node,target,heap):
 
     traverseTree(node.left,target,heap)
     traverseTree(node.right,target,heap)
+
+# Second approach. Use the properties of the BST to reduce the size of the data to half in each iteration kwoing that each value in the right of a node is bigger than itself
+# Each node in the left is smaller or equal
+def cleverTraverseTree(node,target,heap):
+
+    if node is None:
+        return
+
+    dif = abs(target - node.val)
+    heapq.heappush(heap,(dif,node.val))
+
+    if target <= node.val:
+        traverseTree(node.left,target,heap)
+    else:
+        traverseTree(node.right,target,heap)
+
+
+
+
+      

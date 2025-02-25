@@ -6,6 +6,28 @@ class BinaryTree:
         self.right = None
 
 
+def branchSum(node):
+    res = []
+    initialSum = 0
+    calculateBranchSumDFS(node,initialSum,res)
+    return res
+
+
+def calculateBranchSumDFS(node,runningSum,res):
+    # if we have arrive to None return
+    if node is None:
+        return
+    # Compute new running branch sum (temporal branch sum lets say)
+    newRunningSum = runningSum + node.value
+    # If we have arrive to a leaf node append the sum to the vector of results
+    if node.left is None and node.right is None:
+        res.append(newRunningSum)
+    # Now recursive calls
+    calculateBranchSumDFS(node.left,newRunningSum,res)
+    calculateBranchSumDFS(node.right,newRunningSum,res)
+
+
+
 
 
 def printNodeDSF(node):
@@ -76,3 +98,7 @@ I.left = J
 I.right = K
 
 printNodeDSF(root)
+
+
+print("----")
+print(branchSum(root))

@@ -1,4 +1,16 @@
-def nodeDepths(root):
+# O(n) time O(h space) with hs being height
+def nodeDepths(root,depth = 0):
+    # BASE CASE
+    if root is None:
+        return 0
+    # GENERAL
+    return depth + nodeDepths(root.left,depth + 1) + nodeDepths(root.right,depth + 1)
+
+
+# Above there is the really clean algorithm 
+
+
+def nodeDepthsDirty(root):
     list = [0,1,2,3]
     rootDepth = 0
     list[0] += rootDepth

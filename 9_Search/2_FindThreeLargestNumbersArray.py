@@ -23,3 +23,24 @@ def findThreeLargestNumbers(array):
     return sol
 
 
+# Good solution running in O(n)
+def findThreeLargestNumbers(array):
+
+    # sol = [thirdBiggest,secondBiggest,biggest]
+    solution = [-float("inf"),-float("inf"),-float("inf")]
+    
+    for number in array:
+        
+        if number >= solution[2]:
+            swap = solution[2]
+            solution[2] = number
+            number = swap
+
+        if number >= solution[1]:
+            swap = solution[1]
+            solution[1] = number
+            number = swap
+
+        if number >= solution[0]:
+            solution[0] = number
+    return solution

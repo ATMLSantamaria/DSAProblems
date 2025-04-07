@@ -1,4 +1,5 @@
 #include <unordered_map>
+#include <string>
 using namespace std;
 
 bool generateDocument(string characters, string document) {

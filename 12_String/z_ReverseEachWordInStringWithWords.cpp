@@ -20,5 +20,8 @@ string reverseEachWordInAString(string str) {
 
 int main() {
   string target = "ABC         12345         ANNA        TORO   ";
+  string target2 = "a has";
   cout << reverseEachWordInAString(target) << endl;
+  cout << reverseEachWordInAString(target2) << endl;
+
 }

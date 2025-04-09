@@ -8,7 +8,11 @@
 using namespace std;
 
 vector<vector<string>> groupAnagrams(const vector<string>& words) { // Pass by const&
+  // Edge case. Avoid any unnecesary computation. Tiny efficiency improvement
   
+  if (words.empty()) {
+    return {};
+  }
   
   unordered_map<string,vector<string>> anagrams; //unordered_map used because order does not matter
 

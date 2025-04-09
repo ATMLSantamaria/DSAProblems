@@ -20,7 +20,7 @@ vector<vector<string>> groupAnagrams(const vector<string>& words) { // Pass by c
   }
 
   vector<vector<string>> solution;
-  solution.reserve(anagrams.size());             // Optimization to avoid reallocations.
+  solution.reserve(anagrams.size());             // Optimization to avoid reallocations. Important RESERVE, not resize. Reserve guarda memoria para evitar reallocation pero no cambia el size.
   
   // Now iterate and create the solution
   for (auto & [key,value] : anagrams) {          // structured binding, c++17

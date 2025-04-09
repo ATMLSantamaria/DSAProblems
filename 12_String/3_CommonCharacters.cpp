@@ -24,11 +24,33 @@ vector<string> commonCharacters(vector<string> strings) {
   //C+=17 structured binding
   for (const auto & [key,value] : myMap) {
     if (value == strings.size()) {
-      solution.push_back(std::string(1,key)); //convert the char to a single char string. Use std::move for more efficiency. In this case, since char is a primitive, this is 
+      solution.push_back(std::string(1,key)); //convert the char to a single char string. 
     }
   }
   return solution;
 }
+
+#include <array>
+
+
+int firstNonRepeatingCharacterWithArray(std::string str) {
+  // Only 26 letters in english alphabet
+  std::array<int,26> freqArray{}; // is initialised to 0. The {} are VERY IMPORTANT. Otherwise is not guarantee to be initialised to 0
+
+  // Iterate in the string increasing the frequncy
+  for (char ch : str) {
+    freqArray[ch - 'a'] += 1;
+  }
+
+  // Iterate in the string and find the first position in the array with value 0
+  for (size_t i = 0; i < str.size();++i) {
+    if (freqArray[str[i] - 'a'] == 1) {
+      return i;
+    }
+  }
+  return -1;
+}
+
 
 int main() {
   vector<string> target = {"tayyyyauuuca","arryrtcta","nntwywnnac"};

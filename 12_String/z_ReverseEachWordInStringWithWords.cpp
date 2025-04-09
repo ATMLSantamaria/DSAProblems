@@ -6,12 +6,11 @@ using namespace std;
 string reverseEachWordInAString(string str) {
   auto slowIt = str.begin();
   for (auto it = str.begin();it<str.end();++it) {
-    if (*(it+1) == ' ' || *(it+1) == '\0') {
-      std::reverse(slowIt,it+1);
-      it++;
+    if (*(it) == ' ' || it == str.end()) {
+      std::reverse(slowIt,it);
       slowIt=it;
     }
-    while (*it == ' ') {
+    while (it != str.end() && *it == ' ') {
       it++;
       slowIt++;
     }

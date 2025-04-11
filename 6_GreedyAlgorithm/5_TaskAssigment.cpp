@@ -6,11 +6,7 @@ using namespace std;
 
 // std::transform simply create a vector of pairs {task, index}. Because we need to retrieve the original indexes after sorting this is necessary.
 // We dont need to use std::transform. We could have done a typical loop without probem.
-
-
-
-
-vector<vector<int>> taskAssignment(int k, vector<int> tasks) {
+vector<vector<int>> taskAssignmentWithLambda(int k, vector<int> tasks) {
 
   vector<pair<int,int>> helper;
   
@@ -39,6 +35,43 @@ vector<vector<int>> taskAssignment(int k, vector<int> tasks) {
   
   return solution;
 }
+
+
+// Here I will use a functor as a callable function in transform
+class CreateTaskIndexPair {
+public:
+  int index = 0;
+  pair<int,int> operator()(int task) {
+    return make_pair(task,index++);
+  }
+};
+
+vector<vector<int>> taskAssignmentWithFunctor(int k, vector<int> tasks) {
+  // vector<pair<int,int>> tasksIndexes;
+  vector<pair<int,int>> tasksIndexes;
+  tasksIndexes.resize(tasks.size());
+  // Std transform using a functor
+  //std::transform(tasks.begin(),tasks.end(),std::back_inserter(tasksIndexes),CreateTaskIndexPair{});
+  std::transform(tasks.begin(),tasks.end(),tasksIndexes.begin(),CreateTaskIndexPair{});
+  // sort
+  std::sort(tasksIndexes.begin(),tasksIndexes.end());
+  // push to solution pairs of indexes on opposite sides of Tasks to minimise their sum
+  int left = 0;
+  int right = tasks.size() - 1;
+  vector<vector<int>> solution;
+  solution.reserve(k); // avoid deallocations
+  while (left < right) {
+    solution.push_back({tasksIndexes[left].second,tasksIndexes[right].second});
+    left++;
+    right--;
+    
+  }
+  return solution;  
+}
+
+
+
+
 int main() {
   
 }

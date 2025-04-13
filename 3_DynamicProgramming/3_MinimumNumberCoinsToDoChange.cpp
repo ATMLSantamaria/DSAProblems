@@ -11,12 +11,12 @@ using namespace std;
 
 // n=6 pesetas [1,4,5] coins
 // coin 1
-// min ways    0   1   2   3   4   5   6
-// amounts     0   1   2   3   4   5   6
+// min ways                     0   1   2   3   4   5   6
+// amounts (index del array)    0   1   2   3   4   5   6
 
 //coin 4
-// min ways    0   1   2   3   1   5   6
-// amounts     0   1   2   3   4   5   6
+// min ways                     0   1   2   3   1   2   3
+// amounts                      0   1   2   3   4   5   6
 
 
 
@@ -35,6 +35,7 @@ int minNumberOfCoinsForChange(int n, vector<int> denoms) {
   // If after the process the some value was not modified, return that value
   return minimumNumCoins[n] != INT_MAX-1 ? minimumNumCoins[n] : -1;
 }
+
 
 int main() {
 

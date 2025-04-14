@@ -1,0 +1,46 @@
+using namespace std;
+
+// This is an input class. Do not edit.
+class BinaryTree {
+ public:
+  int value;
+  BinaryTree* left = nullptr;
+  BinaryTree* right = nullptr;
+
+  BinaryTree(int value) { this->value = value; }
+};
+
+int calculateTotalSum(BinaryTree * tree) {
+  if (tree == nullptr) {
+    return 0;
+  }
+  return tree->value + calculateTotalSum(tree->left) + calculateTotalSum(tree->right);
+}
+
+int findPartialSum(BinaryTree * node,int & desiredSum) {
+  if (node == nullptr) {
+    return 0;
+  }
+  int leftSum = findPartialSum(node->left,desiredSum);
+  int rightSum = findPartialSum(node->right,desiredSum);
+
+  if (leftSum == desiredSum) {
+    return leftSum; 
+  }
+  if(rightSum == desiredSum) {
+    return rightSum;
+  }
+  
+  int currentSum = node->value + findPartialSum(node->left,desiredSum) + findPartialSum(node->right,desiredSum);
+  return currentSum;
+  
+}
+
+int splitBinaryTree(BinaryTree* tree) {
+  // total sum. This run in O(n)
+  int totalSum = calculateTotalSum(tree);
+  if (totalSum % 2 != 0) {return 0;} ; // if tree is odd is not possible to split in 2
+  int desiredSum = totalSum / 2;
+  // This will also run in O(n)
+  return findPartialSum(tree,desiredSum) == desiredSum ? desiredSum : 0 ;
+}
